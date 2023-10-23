@@ -1,0 +1,81 @@
+<accounts-utils-ux-layout [breadCrumbData]="breadcrumbData" [exchangeRate]="exchangeRate$ | async">
+  <div class="mat-elevation-z1">
+    <div class="account-table-wrapper">
+      <!-- Accounts Table -->
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- AccountName Column -->
+        <ng-container [matColumnDef]="columns.AccountName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="margin-l5">
+              {{element[columns.AccountName]}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Category Column -->
+        <ng-container [matColumnDef]="columns.Category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              {{element[columns.Category]}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Tags Column -->
+        <ng-container [matColumnDef]="columns.Tags">
+          <th mat-header-cell *matHeaderCellDef> Tags </th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              {{element[columns.Tags]}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Balance Column -->
+        <ng-container [matColumnDef]="columns.Balance">
+          <th mat-header-cell class="text-right" *matHeaderCellDef> Balance </th>
+          <td mat-cell class="text-right" *matCellDef="let element">
+            <div class="margin-v2">
+              <p class="margin-v1">
+                {{ element[columns.Balance] | customCurrency : true }}
+              </p>
+              <p class="margin-v1">
+                {{ element[columns.Balance] | amount : (exchangeRate$ | async)}}
+              </p>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container [matColumnDef]="columns.AvailableBalance">
+          <th mat-header-cell class="text-right" *matHeaderCellDef>Available Balance </th>
+          <td mat-cell class="text-right" *matCellDef="let element">
+            <div class="margin-v3">
+              <p class="margin-v1">
+                {{ element[columns.AvailableBalance] | customCurrency : true }}
+              </p>
+              <p class="margin-v1">
+                {{ element[columns.AvailableBalance] | amount : (exchangeRate$ | async) }}
+              </p>
+            </div>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+        (click)="navigateToDetail(row.id)"
+        [ngClass]="{
+          'row--bg-color-increase':accountBalanceStatuses.Increase === row.status,
+          'row--bg-color-decrease':accountBalanceStatuses.Decrease === row.status,
+        }"></tr>
+      </table>
+
+      <accounts-utils-ux-paginator></accounts-utils-ux-paginator>
+
+    </div>
+  </div>
+
+</accounts-utils-ux-layout>

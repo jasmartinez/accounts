@@ -1,0 +1,48 @@
+@use "apps/accounts/src/colors" as colors;
+@use "libs/shared/front/utils/src/lib/styles/text" as text;
+
+:host{
+  .ux-toolbar{
+    background-color: colors.$custom-background;
+    height: auto;
+    @include text.custom_text();
+
+    div.wrapper{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      width: 100%;
+    }
+    button{
+      border-radius: 2px;
+    }
+    .exchange-rate{
+      display: flex;
+      align-items: center;
+      &__spacer{
+        margin: 0 5px;
+      }
+
+      &__icon{
+        color:colors.$white;
+        background-color: gray;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 20px;
+        height: 20px;
+        width: 20px;
+      }
+      &__data{
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .menu{
+    background-color: colors.$custom-primary;
+    color: colors.$white;
+  }
+}

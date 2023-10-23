@@ -1,0 +1,29 @@
+<mat-divider></mat-divider>
+<div class="wrapper">
+  <!-- title -->
+  <div class="title__container">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+  <!-- breadcrumbs -->
+  <div class="breadcrumb__container">
+    <ng-container *ngTemplateOutlet="breadcrumbItemTmpl;context:{ last:false,item:{ name:'Home',title:'Home',route:'/'} }">
+    </ng-container>
+    
+    <ng-container *ngFor="let item of breadCrumbData; let last = last;">
+      <ng-container *ngTemplateOutlet="breadcrumbItemTmpl;context:{ last,item }">
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+
+<mat-divider></mat-divider>
+
+<ng-template #breadcrumbItemTmpl let-item="item" let-last="last">
+    <span (click)="navigate(item)" class="breadcrumb__item" [ngClass]="{'breadcrumb__item--selected': last}">
+      {{ item.name}} 
+    </span>
+    <span *ngIf="!last" class="breadcrumb__spacer" > / </span>
+</ng-template>

@@ -1,0 +1,35 @@
+@use './colors' as colors;
+table{
+  .mat-mdc-header-cell{
+   &.mdc-data-table__header-cell{
+    font-weight: 600;
+    color:colors.$custom-text;
+    &.mat-sort-header{
+      color:colors.$custom-primary;
+      .mat-sort-header-arrow{
+        color:colors.$custom-primary;
+      }
+    }
+   }
+  }
+  
+  .mat-mdc-cell{
+    &.mdc-data-table__cell{
+      color:colors.$custom-text;
+    }
+  }
+  
+  
+  .row{
+    &--bg-color-increase{
+      background-color: map-get(colors.$custom-accounts-primary, 100 );
+    }
+    &--bg-color-decrease{
+      background-color: map-get(colors.$custom-accounts-warn, 100 );
+    } 
+  } 
+}
+.account-table-wrapper{
+  padding: 10px 20px;
+  background-color: colors.$white;
+}

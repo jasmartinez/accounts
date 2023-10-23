@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+@use './colors' as colors;
+@import "~@angular/cdk/overlay-prebuilt.css";
+@import  './helpers';
+@import  './table';
+
+
+/* ======== Angular material custom themes ======== */ 
+$app-primary:mat.define-palette(colors.$custom-accounts-primary);
+$app-accent: mat.define-palette(colors.$custom-accounts-accent);
+$app-warn: mat.define-palette(colors.$custom-accounts-warn);
+$accounts-light-theme: mat.define-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+    ));
+    @include mat.core-theme($accounts-light-theme);
+    @include mat.all-component-themes($accounts-light-theme);
+    @import 'material-icons/iconfont/material-icons.css';
+
+.cdk-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+    outline: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    left: 0;
+}
+.mat-calendar-body-cell-content::before{
+  margin: inherit;
+}
+.mat-calendar-body-cell:focus .mat-focus-indicator::before{
+  content: none!important;
+}

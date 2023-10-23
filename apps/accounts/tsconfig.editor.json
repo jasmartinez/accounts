@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "../../libs/front/accounts/src/lib/+state/front-account-sockets.service.ts"],
+  "compilerOptions": {
+    "types": ["jest", "node"]
+  }
+}

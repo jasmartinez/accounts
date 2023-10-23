@@ -1,0 +1,20 @@
+  <mat-toolbar class="ux-toolbar">
+    <div class="wrapper">
+      <button class="menu" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+   
+      <span class="exchange-rate">
+        <mat-icon class="material-icons-outlined exchange-rate__icon">currency_bitcoin</mat-icon>
+        <span  class="exchange-rate__spacer">:</span>
+
+        <span class="exchange-rate__data">
+          {{ exchangeRate | customCurrency }}
+        </span>
+      </span>
+  
+      <button mat-icon-button>
+        <mat-icon  class="material-icons-outlined">notifications</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>

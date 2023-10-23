@@ -1,0 +1,40 @@
+
+@use "apps/accounts/src/colors" as colors;
+accounts-utils-ux-paginator{
+    .mat-mdc-paginator-outer-container{
+      .mat-mdc-paginator-container{
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        .mat-mdc-paginator-range-actions{
+          .mat-mdc-paginator-range-label{
+            display: none;
+          }
+        }
+      }
+    }
+    .mat-mdc-paginator-page-size-select{
+      .mdc-notched-outline__leading{
+        border: transparent;
+      }
+      
+      .mdc-notched-outline__notch{
+        border: transparent;
+      }
+      .mdc-notched-outline__trailing{
+        border: transparent;
+      }
+    }
+    .mat-mdc-paginator-page-size-label{
+      font-size: 14px;
+      color:colors.$custom-text;
+    }
+    .paginator-current-page{
+      color:colors.$white;
+      background-color: colors.$custom-primary;
+      width: 22px;
+      border-radius: 2px;
+      text-align: center;
+      font-weight: 600;
+    }
+  }
+  

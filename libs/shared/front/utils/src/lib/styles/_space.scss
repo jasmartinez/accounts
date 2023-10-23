@@ -1,0 +1,56 @@
+
+@mixin full-width($display:block){
+  width: 100%;
+  display: $display;
+}
+
+@mixin full-height($display:block){
+  height: 100%;
+  display: $display;
+}
+
+@function spacing($amount){
+  @return $amount * 4px;
+}
+
+
+@mixin loop($init: 0, $end:8){
+  @for $i from 0 through $end {
+    @content($i);
+  }
+}
+
+@mixin generate_spacers(){
+  // margin-left
+  @include loop(0,10) using ($i){
+    .margin-l#{$i} {
+      margin-left: spacing($i);
+    }
+  }
+  // margin-right
+  @include loop(0,10) using ($i){
+    .margin-r#{$i} {
+      margin-right: spacing($i);
+    }
+  }
+  // margin vertical
+  @include loop(0,10) using ($i){
+    .margin-v#{$i} {
+      margin-top: spacing($i);
+      margin-bottom: spacing($i);
+    }
+  }
+
+  // padding-left
+  @include loop(0,10) using ($i){
+    .padding-l#{$i} {
+      padding-left: spacing($i);
+    }
+  }
+  // padding-right
+  @include loop(0,10) using ($i){
+    .padding-r#{$i} {
+      padding-right: spacing($i);
+    }
+  }
+}

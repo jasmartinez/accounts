@@ -1,0 +1,4 @@
+@use "libs/shared/front/utils/src/lib/styles/space" as space;
+:host{
+  @include space.full-height(); 
+}

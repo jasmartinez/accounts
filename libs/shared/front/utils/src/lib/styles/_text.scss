@@ -1,0 +1,6 @@
+@use "apps/accounts/src/colors" as colors;
+
+@mixin custom_text() {
+  color: colors.$custom-text;
+  font-weight: 500;
+}

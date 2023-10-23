@@ -1,0 +1,13 @@
+accounts-front-accounts-list{
+  .account-table-wrapper{
+    table{
+      tbody{
+        tr{
+          td:hover{
+            cursor: pointer!important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@accounts/front-accounts": ["libs/front/accounts/src/index.ts"],
+      "@accounts/shared-front-material": [
+        "libs/shared/front/material/src/index.ts"
+      ],
+      "@accounts/shared-front-utils": ["libs/shared/front/utils/src/index.ts"],
+      "@accounts/shared-models": ["libs/shared/models/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

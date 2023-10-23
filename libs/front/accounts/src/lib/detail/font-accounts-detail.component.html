@@ -1,0 +1,205 @@
+<accounts-utils-ux-layout [breadCrumbData]="breadcrumbData" [exchangeRate]="exchangeRate$ | async">
+  <!-- Detail Header -->
+  <section class="account-detail mat-elevation-z1" *ngIf="(account$ | async) as account">
+    <!-- Detail Header Owner-->
+    <div class="account-detail__owner">
+      <span>
+        <span class="account-detail__owner__name margin-r4">{{account[accountFields.AccountName]}} </span>
+        <mat-chip>Active</mat-chip>
+      </span>
+
+      <span>
+        Treasury Account
+      </span>
+    </div>
+
+    <!-- Detail Header Main-->
+    <div class="account-detail__main">
+      <h2 >
+        <span [ngClass]="{
+            'account-detail__main__currency--decrease':account.status === accountBalanceStatuses.Decrease,
+            'account-detail__main__currency--increase':account.status === accountBalanceStatuses.Increase
+          }" class="account-detail__main__currency account-detail__main__currency--bitcoin">
+          {{ account[accountFields.Balance] | customCurrency : true}}
+        </span>
+        <span [ngClass]="{
+            'account-detail__main__currency--decrease':account.status === accountBalanceStatuses.Decrease,
+            'account-detail__main__currency--increase':account.status === accountBalanceStatuses.Increase
+        }"class="account-detail__main__currency account-detail__main__currency">
+          ({{ account[accountFields.Balance] | amount : (exchangeRate$ | async)}})
+        </span>
+      </h2>
+      <span>
+        (Includes 0 BTC ($0.00) of unconfirmed funds)
+      </span>
+    </div>
+
+    <!-- Detail Header Footer-->
+    <div class="account-detail__footer">
+      <span class="account-detail__footer__balance">
+        <span class="margin-r2">
+          Available Balance :
+        </span>
+        <span class="margin-r2">
+          {{ account[accountFields.AvailableBalance] | customCurrency : true}}
+        </span>
+        <span>
+          ({{ account[accountFields.AvailableBalance] | amount : (exchangeRate$ | async)}})
+        </span>
+
+      </span>
+
+      <button mat-button class="account-detail__footer__action" (click)="expansionPanelRef.toggle()">
+        <span class="margin-r2">
+          Account Information
+        </span>
+        <mat-icon [ngClass]="{'expanded': expansionPanelRef.expanded}">
+          expand_more
+        </mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <!-- Panel -->
+  <mat-expansion-panel #expansionPanelRef hideToggle="true">
+
+    <div class="account-detail__panel">
+      <!-- Title Panel   -->
+      <div class="account-detail__panel__title">
+        <span class="margin-l4">
+          Statement
+        </span>
+        <mat-checkbox color="primary" [labelPosition]="'before'">Show unconfirmed transactions</mat-checkbox>
+      </div>
+
+      <!-- Date Range -->
+      <div class="account-detail__panel__date-range">
+        <mat-form-field appearance="outline">
+          <mat-label>Select date range</mat-label>
+          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <button class="account-detail__panel__date-range" mat-button (click)="resetSelection()">
+          Clear Selected Dates
+        </button>
+      </div>
+
+      <!-- Table content -->
+      <table mat-table [dataSource]="dataSource">
+
+        <!-- Confirmed date Column -->
+        <ng-container [matColumnDef]="columns.ConfirmedDate">
+          <th mat-header-cell *matHeaderCellDef> Confirmed date </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="margin-l5">
+              {{element[columns.ConfirmedDate] | date:"dd/MM/yyyy HH:mm"}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Order Id Column -->
+        <ng-container [matColumnDef]="columns.OrderId">
+          <th mat-header-cell *matHeaderCellDef> Order Id</th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              {{element[columns.OrderId]}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Order Code Column -->
+        <ng-container [matColumnDef]="columns.OrderCode">
+          <th mat-header-cell *matHeaderCellDef> Order Code</th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              {{element[columns.OrderCode]}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Transaction Type Column -->
+        <ng-container [matColumnDef]="columns.TransactionType">
+          <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element[columns.TransactionType] === 'SENT'; then sentTmpl; else receivedTmpl"></ng-container>
+            <ng-template #sentTmpl>
+              <span >
+                Payment Sent
+              </span>
+            </ng-template>
+            <ng-template #receivedTmpl>
+              <span >
+                Payment Received
+              </span>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Debit Column -->
+        <ng-container [matColumnDef]="columns.Debit">
+          <th mat-header-cell class="text-right" *matHeaderCellDef> Debit </th>
+          <td mat-cell class="text-right" *matCellDef="let element">
+            <div class="margin-v2">
+              <ng-container *ngIf="element[columns.Debit] !== null">
+                <p class="margin-v1">
+                  {{element[columns.Debit] | customCurrency : true}}
+                </p>
+                <p class="margin-v1">
+                  {{element[columns.Debit] | amount : (exchangeRate$ | async)}}
+                </p>
+              </ng-container>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Credit Column -->
+        <ng-container [matColumnDef]="columns.Credit">
+          <th mat-header-cell class="text-right" *matHeaderCellDef> Credit </th>
+          <td mat-cell class="text-right" *matCellDef="let element">
+            <div class="margin-v2">
+              <ng-container *ngIf="element[columns.Credit] !== null">
+                <p class="margin-v1">
+                  {{element[columns.Credit] | customCurrency : true }}
+                </p>
+                <p class="margin-v1">
+                  {{element[columns.Credit] | amount : (exchangeRate$ | async) }}
+                </p>
+              </ng-container>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Balance Column -->
+        <ng-container [matColumnDef]="columns.Balance">
+          <th mat-header-cell class="text-right" *matHeaderCellDef> Balance </th>
+          <td mat-cell class="text-right" *matCellDef="let element">
+            <div class="margin-v2">
+              <p class="margin-v1">
+                {{element[columns.Balance] | customCurrency : true}}
+              </p>
+              <p class="margin-v1">
+                {{element[columns.Balance] | amount : (exchangeRate$ | async)}}
+              </p>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{
+            'row--bg-color-increase':accountBalanceStatuses.Increase === row.status,
+            'row--bg-color-decrease':accountBalanceStatuses.Decrease === row.status,
+          }"></tr>
+      </table>
+
+      <accounts-utils-ux-paginator></accounts-utils-ux-paginator>
+    </div>
+  </mat-expansion-panel>
+
+</accounts-utils-ux-layout>

@@ -1,0 +1,117 @@
+@use "apps/accounts/src/colors" as colors;
+ accounts-front-accounts-detail{
+
+   .account-detail{
+       display: flex;
+       flex-direction: column;
+       width: calc(100% - 60px);
+       background-color: colors.$white;
+       padding: 20px 30px;
+       margin-bottom: 30px;
+       color: colors.$custom-text;
+
+       &__owner{
+         display: flex;
+         flex-direction: column;
+         width: 100%;
+         &__name{
+           font-weight: 300;
+           font-size: 22px;
+         }
+       }
+
+       &__main{
+         margin-bottom: 15px;
+         h2{
+           margin-bottom: 0px;
+           line-height: 40px;
+         }
+         &__currency{
+           color: colors.$custom-text;
+           font-weight: 300;
+           font-size: 48px;
+           &--bitcoin{
+             font-weight: 600;
+           }
+           &--increase{
+            color: colors.$custom-primary;
+           }
+           &--decrease{
+            color: colors.$custom-warn;
+           }
+         }
+       }
+
+       &__footer{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
+         &__balance{
+           font-weight: 600;
+         }
+         &__action{
+             display: flex;
+             flex-direction: row-reverse;
+             color:colors.$button-text !important;
+           .mat-icon{
+             animation: transform 300ms ease-in-out;
+             transition-duration: 0.3s;
+             transition-property: transform;
+             transform: rotate(0deg);
+            &.expanded{
+             transform: rotate(180deg);
+            }
+           }
+         }
+       }
+     }
+   
+     .account-detail__panel{
+       padding: 16px 4px 16px 4px; 
+       color: colors.$custom-text;
+       font-weight: 600;
+       
+       &__title{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
+         span:nth-child(1){
+           font-size: 20px;
+         }
+         .mat-mdc-checkbox{
+            .mdc-label{
+              color: colors.$custom-text;
+              font-weight: 600;
+            }
+         }
+
+         .mdc-checkbox {
+           .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+             color: colors.$white;
+           }
+         }
+       }
+
+      &__date-range {
+        .mdc-notched-outline{
+          .mdc-notched-outline__leading {
+            border-color: transparent!important;
+          }
+  
+          .mdc-notched-outline__notch{
+            border-color: transparent!important;
+          }
+  
+          .mdc-notched-outline__trailing {
+            border-color: transparent!important;
+          }
+        }
+        &__reset{
+          margin-left: 10px;
+          font-weight: 500;
+        }
+       }
+     }
+ }
