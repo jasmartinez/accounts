@@ -12,7 +12,10 @@ import { AccountsFacadeService } from './front-accounts-state.facade';
 
 @Injectable()
 export class AccountSocketsService {
-  socket = io('http://localhost:3300');
+  socket = io({
+    path:'/socket.io',
+    transports:['websocket','polling']
+  });  
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private readonly accountsFacade: AccountsFacadeService) {
     this.socket.on(EventTypesEnum.ExchangeRate, (data) => {

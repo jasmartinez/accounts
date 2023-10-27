@@ -3,13 +3,9 @@ import { delay, of, repeat, switchMap } from 'rxjs';
 import { getRandomInt } from './events.functions';
 import { AccountBalanceStatusEnum, AccountEvent, EventTypesEnum, ExchangeRateEvent } from '@accounts/shared-models';
 
+
 @WebSocketGateway(3300, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    transports: ['websocket', 'polling'],
-    credentials: false,
-  },
+  transports: ['websocket', 'polling'],
   allowEIO3: true,
 })
 export class EventsGateway implements OnGatewayInit {
