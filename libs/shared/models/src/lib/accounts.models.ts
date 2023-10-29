@@ -8,7 +8,7 @@ export enum AccountListFieldsEnum {
 }
 
 export interface Account {
-  id:string,
+  id?:string,
   [AccountListFieldsEnum.AccountName]:string,
   [AccountListFieldsEnum.Category]:string,
   [AccountListFieldsEnum.Tags]:string,
